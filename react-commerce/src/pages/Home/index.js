@@ -22,19 +22,28 @@ const useStyles = makeStyles((theme) => ({
         boxShadow: 'none',
     },
     icons: {
-        paddingRight: theme.spacing(3),
         color: '#ffffff'
     },
     grow: {
         flexGrow: 1,
     },
-    buyButton: {
-        color: '#ffffff',
-        backgroundColor: '#1769aa',
-        position: 'flow',
-        top: '150px',
-        left: '60px'
+    buyBox: {
+        color: '#fafafa',
+        backgroundColor: '#fafafa',
+        '&:hover': {
+            boxShadow: 'none',
+            backgroundColor: '#fafafa',
+        }
     },
+    buyText: {
+        position: 'absolute',
+        top: '50%', 
+        left: '50%', 
+        transform: 'translate(-50%, -50%)',
+        color: '#ffffff',
+        textShadow: '1px 1px 2px black',
+        fontSize: '26px'
+    }
 }))
 
 export default () => {
@@ -86,7 +95,7 @@ export default () => {
                         <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" />
                         <Typography variant="h6" className={classes.title}>
                             Marketplace
-                    </Typography>
+                        </Typography>
                         <div className={classes.grow} />
                         <Typography variant="h6">
                             {countCart > 0 ? countCart : ''}
@@ -103,18 +112,22 @@ export default () => {
                 <Grid container spacing={4}>
                     {
                         list.map((item, index) => (
-                            <Grid key={uuid()} item lg={3} md={4} sm={6} xs={14}>
+                            <Grid key={uuid()} item lg={2} md={3} sm={4} xs={11}>
                                 <Box onClick={clickItem}
                                     onMouseEnter={() => { setBuyButton({ visible: true, id: index }); }}
                                     onMouseLeave={() => { setBuyButton(false); }}>
-                                    {buyButton.visible == true && buyButton.id == index ?
-                                        <Button className={classes.buyButton}>Comprar</Button> : 
-                                        <div><br/><br/></div>}
-                                    <img
-                                        style={{ width: '100%' }}
-                                        alt={item.title}
-                                        src={item.picture}
-                                    />
+                                    <Button className={classes.buyBox}>
+                                        <div style={{ position: "relative" }}>
+                                            <img
+                                                style={{ width: '100%' }}
+                                                alt={item.title}
+                                                src={item.picture}
+                                            />
+                                            <Typography variant="h6" className={classes.buyText}>
+                                                    {buyButton.visible && buyButton.id == index ? 'Comprar' : ''}
+                                            </Typography>
+                                        </div>
+                                    </Button>
                                     <Box>
                                         <Typography
                                             variant="body2"
